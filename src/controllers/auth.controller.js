@@ -65,7 +65,7 @@ const activate = async (req, res) => {
     return;
   }
 
-  await user.update({ activationToken: null }, { where: { activationToken } });
+  await user.update({ activationToken: null });
   await user.save();
 
   res.send(user);
@@ -82,9 +82,15 @@ const login = async (req, res) => {
 
   const user = await userService.findByEmail(email);
 
+  if (!user) {
+    res.status(401).send('Invalid email or password');
+
+    return;
+  }
+
   const isPasswordValid = await bcrypt.compare(password, user.password);
 
-  if (!isPasswordValid || !user) {
+  if (!isPasswordValid) {
     res.status(401).send('Invalid email or password');
 
     return;

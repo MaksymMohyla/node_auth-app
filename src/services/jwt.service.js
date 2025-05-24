@@ -51,7 +51,7 @@ async function generatePair(res, user) {
     maxAge: 30 * 24 * 60 * 60 * 1000,
   }); // 30 днів
 
-  userService.updateRefreshToken(user.id, refreshToken);
+  await userService.updateRefreshToken(user.id, refreshToken);
 }
 
 export const jwtService = {

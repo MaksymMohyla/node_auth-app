@@ -6,6 +6,8 @@ export const errorMiddleware = (err, req, res, next) => {
       message: err.message,
       errors: err.errors,
     });
+
+    return;
   }
 
   res.status(500).send({
